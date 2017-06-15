@@ -8,12 +8,13 @@
     xmlns:viewmodel="using:CreatorsNews.ViewModels"
     xmlns:model="using:CreatorsNews.Models"
     xmlns:shared="using:Shared"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
     <Page.DataContext>
-        <viewmodel:MainPageViewModel x:Name="ViewModel"/>
+        <viewmodel:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-    
+
     <Page.Resources>
         <shared:FirstLastDataTemplateSelector x:Key="FirstLastDataTemplateSelector">
             <shared:FirstLastDataTemplateSelector.DefaultTemplate>
@@ -25,15 +26,15 @@
                                 VariableSizedWrapGrid.RowSpan="1">
                         <Image Source="{x:Bind MainImage}"
                                Height="240"
-                               Stretch="UniformToFill"/>
+                               Stretch="UniformToFill" />
                         <TextBlock Style="{StaticResource TitleTextBlockStyle}"
                                    FontWeight="Bold"
                                    FontSize="20"
-                                   Text="{x:Bind Title}"/>
+                                   Text="{x:Bind Title}" />
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}"
                                    Text="{x:Bind Paragraphs[0]}"
                                    Height="60"
-                                   TextTrimming="WordEllipsis"/>
+                                   TextTrimming="WordEllipsis" />
                     </StackPanel>
                 </DataTemplate>
             </shared:FirstLastDataTemplateSelector.DefaultTemplate>
@@ -44,16 +45,16 @@
                                 VariableSizedWrapGrid.RowSpan="3">
                         <Image Source="{x:Bind MainImage}"
                                MaxHeight="700"
-                               Stretch="UniformToFill"/>
+                               Stretch="UniformToFill" />
                         <TextBlock Style="{StaticResource TitleTextBlockStyle}"
                                    FontWeight="Bold"
                                    FontSize="24"
-                                   Text="{x:Bind Title}"/>
+                                   Text="{x:Bind Title}" />
                         <TextBlock Style="{StaticResource BodyTextBlockStyle}"
                                    Text="{x:Bind Paragraphs[0]}"
                                    Height="60"
                                    TextWrapping="Wrap"
-                                   TextTrimming="WordEllipsis"/>
+                                   TextTrimming="WordEllipsis" />
                     </StackPanel>
                 </DataTemplate>
             </shared:FirstLastDataTemplateSelector.FirstItemTemplate>
@@ -63,12 +64,15 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
         <shared:VariableSizedGridView ItemsSource="{x:Bind ViewModel.Articles}"
-                  ItemTemplateSelector="{StaticResource FirstLastDataTemplateSelector}">
+                                      ItemTemplateSelector="{StaticResource FirstLastDataTemplateSelector}"
+                                      IsItemClickEnabled="True"
+                                      SelectionMode="None"
+                                      ItemClick="ArticleClicked">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VariableSizedWrapGrid Orientation="Horizontal"
                                            ItemHeight="424"
-                                           ItemWidth="348"/>
+                                           ItemWidth="348" />
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
         </shared:VariableSizedGridView>

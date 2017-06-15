@@ -154,7 +154,7 @@ namespace CreatorsNews.Models
                 },
                 new Article
                 {
-                    Title = "Crackdown 3: Microsoft calrifies Terry Crews' Role",
+                    Title = "Crackdown 3: Microsoft clarifies Terry Crews' Role",
                     MainImage = new BitmapImage(new Uri("ms-appx:///Assets/ArticleImages/Crackdown.png")),
                     Paragraphs = new[]
                     {
