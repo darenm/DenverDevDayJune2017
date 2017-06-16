@@ -81,15 +81,18 @@ namespace CreatorsNews
                         var root = (FrameworkElement)container.ContentTemplateRoot;
                         var image = (Image)root.FindName("Image");
 
-                        // Wait for image opened. In future Insider Preview releases, this won't be necessary.
-                        //image.Opacity = 0;
-                        animation.TryStart(image);
+                        image.Opacity = 0;
 
+                        // this never fires
                         //image.ImageOpened += (sender_, e_) =>
                         //{
                         //    image.Opacity = 1;
                         //    animation.TryStart(image);
                         //};
+
+                        // Have to run this directly
+                        image.Opacity = 1;
+                        animation.TryStart(image);
                     }
                     else
                     {

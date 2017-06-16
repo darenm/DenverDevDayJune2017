@@ -28,6 +28,7 @@
             <StackPanel HorizontalAlignment="Center"
                         MaxWidth="700">
                 <Image Source="{x:Bind ViewModel.Article.MainImage, Mode=TwoWay}"
+                       Opacity="0"
                        x:Name="Image"
                        Stretch="UniformToFill" />
                 <TextBlock Style="{StaticResource HeaderTextBlockStyle}"

@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -21,19 +22,19 @@ namespace CreatorsNews
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var articleIndex = (int) e.Parameter;
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Image");
-            if (animation != null)
-            {
-                Image.Opacity = 0;
-                // Wait for image opened. In future Insider Preview releases, this won't be necessary.
-                Image.ImageOpened += (sender_, e_) =>
-                {
-                    Image.Opacity = 1;
-                    animation.TryStart(Image);
-                };
-            }
-
             ViewModel.LoadArticle(articleIndex);
+
+            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Image");
+            //if (animation != null)
+            //{
+            //    animation.TryStart(Image);
+            //    Image.Opacity = 1;
+            //}
+
+            Image.Opacity = 1;
+            animation.TryStart(Image);
+
+
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = Frame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
 
@@ -42,8 +43,7 @@ namespace CreatorsNews
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Image", Image);
 
             // Add a fade out effect
-            Transitions = new TransitionCollection();
-            Transitions.Add(new ContentThemeTransition());
+            Transitions = new TransitionCollection {new ContentThemeTransition()};
         }
 
     }
