@@ -1,0 +1,99 @@
+﻿<Page
+    x:Class="CreatorsNews.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CreatorsNews"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="using:CreatorsNews.ViewModels"
+    xmlns:model="using:CreatorsNews.Models"
+    xmlns:shared="using:Shared"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewmodel:MainPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Page.Resources>
+        <shared:FirstLastDataTemplateSelector x:Key="FirstLastDataTemplateSelector">
+            <shared:FirstLastDataTemplateSelector.DefaultTemplate>
+                <DataTemplate x:DataType="model:Article">
+                    <StackPanel Width="324"
+                                Height="400"
+                                Margin="12"
+                                VariableSizedWrapGrid.ColumnSpan="1"
+                                VariableSizedWrapGrid.RowSpan="1">
+                        <Image Source="{x:Bind MainImage}"
+                               Height="240"
+                               x:Name="Image"
+                               Stretch="UniformToFill" />
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                   FontWeight="Bold"
+                                   FontSize="20"
+                                   Text="{x:Bind Title}" />
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                   Text="{x:Bind Paragraphs[0]}"
+                                   Height="60"
+                                   TextTrimming="WordEllipsis" />
+                    </StackPanel>
+                </DataTemplate>
+            </shared:FirstLastDataTemplateSelector.DefaultTemplate>
+            <shared:FirstLastDataTemplateSelector.FirstItemTemplate>
+                <DataTemplate x:DataType="model:Article">
+                    <StackPanel Margin="12"
+                                VariableSizedWrapGrid.ColumnSpan="2"
+                                VariableSizedWrapGrid.RowSpan="3">
+                        <Image Source="{x:Bind MainImage}"
+                               MaxHeight="700"
+                               Stretch="UniformToFill"
+                               x:Name="Image"/>
+                        <TextBlock Style="{StaticResource TitleTextBlockStyle}"
+                                   FontWeight="Bold"
+                                   FontSize="24"
+                                   Text="{x:Bind Title}" />
+                        <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                   Text="{x:Bind Paragraphs[0]}"
+                                   Height="60"
+                                   TextWrapping="Wrap"
+                                   TextTrimming="WordEllipsis" />
+                    </StackPanel>
+                </DataTemplate>
+            </shared:FirstLastDataTemplateSelector.FirstItemTemplate>
+        </shared:FirstLastDataTemplateSelector>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="31"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Rectangle Fill="DeepSkyBlue"
+                       Opacity="0.2"/>
+            <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Padding="59,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">News</TextBlock>
+        </Grid>
+        <shared:VariableSizedGridView ItemsSource="{x:Bind ViewModel.Articles}"
+                                      x:Name="ArticlesGridView"
+                                      Grid.Row="1"
+                                      ItemTemplateSelector="{StaticResource FirstLastDataTemplateSelector}"
+                                      IsItemClickEnabled="True"
+                                      SelectionMode="None"
+                                      ItemClick="ArticleClicked"
+                                      Loaded="ArticlesGridView_OnLoaded">
+            <GridView.ItemContainerTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition x:Name="EntranceTransition" />
+                </TransitionCollection>
+            </GridView.ItemContainerTransitions>
+
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VariableSizedWrapGrid Orientation="Horizontal"
+                                           ItemHeight="424"
+                                           ItemWidth="348" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </shared:VariableSizedGridView>
+
+    </Grid>
+</Page>
